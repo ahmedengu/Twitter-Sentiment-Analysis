@@ -1,4 +1,5 @@
 # Tweet Sentiment Analysis
+Tweet Sentiment Analysis using twit to stream from twitter and sentiment to evaluate the tweets
 
 ## Running it locally
 * Install nodejs from here https://nodejs.org/en/
