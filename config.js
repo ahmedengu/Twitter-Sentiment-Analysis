@@ -25,8 +25,8 @@ module.exports = {
     },
     port: 5000,
     sentimentSensitivity: {
-        negative: -1,
-        positive: 0
+        negative: -2.5,
+        positive: 2.5
     },
     highlightKeywords: true
 };
