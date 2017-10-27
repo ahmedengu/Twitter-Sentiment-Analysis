@@ -1,5 +1,5 @@
 {
-  "name": "Twitter-Sentiment-Analysis",
+  "name": "twitter-sentiment-analysis",
   "main": "./server.js",
   "dependencies": {
     "express": "3.x",
@@ -23,5 +23,17 @@
     "gulp-uglifycss": "^1.0.8",
     "gulp-useref": "^3.1.2",
     "gulp-util": "^3.0.8"
-  }
+  },
+  "description": "* Install nodejs from here https://nodejs.org/en/\r * Run the following commands to install dependencies\r ```",
+  "version": "1.0.0",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ahmedengu/Twitter-Sentiment-Analysis.git"
+  },
+  "author": "ahmedengu",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ahmedengu/Twitter-Sentiment-Analysis/issues"
+  },
+  "homepage": "https://github.com/ahmedengu/Twitter-Sentiment-Analysis#readme"
 }
