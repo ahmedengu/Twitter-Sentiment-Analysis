@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="en" style="height:100%;" ng-app="App" ng-controller="Ctrl">
+<head>
+    <meta charset="utf-8">
+    <title>{{index.title}}</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="keywords" content="{{index.keywords}}"/>
+    <meta name="description" content="{{index.description}}"/>
+    <link rel="shortcut icon" href="/favicon.ico">
+
+    <link href="http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,400,300,600,700"
+          rel="stylesheet">
+    <link href="http://fonts.googleapis.com/css?family=Lato:300,400,700,300italic,400italic,700italic" rel="stylesheet">
+
+    <link href="dist/styles.min.css" rel="stylesheet">
+    <!-- HTML5 shim, for IE6-8 support of HTML5 elements. All other JS at the end of file. -->
+    <!--[if lt IE 9]>
+    <script src="js/html5shiv.js"></script>
+    <script src="js/respond.min.js"></script>
+    <![endif]-->
+
+    <style>
+        #divLoading.show {
+            display: block;
+            position: fixed;
+            z-index: 9999;
+            opacity: 0.9;
+            background: #ffffff url('images/spinner.gif') no-repeat center;
+            left: 0;
+            bottom: 0;
+            right: 0;
+            top: 0;
+        }
+
+        .thumbnail {
+            padding: 0px;
+        }
+
+        .panel {
+            position: relative;
+        }
+
+        .panel > .panel-heading:after, .panel > .panel-heading:before {
+            position: absolute;
+            top: 11px;
+            left: -16px;
+            right: 100%;
+            width: 0;
+            height: 0;
+            display: block;
+            content: " ";
+            border-color: transparent;
+            border-style: solid solid outset;
+            pointer-events: none;
+        }
+
+        .panel > .panel-heading:after {
+            border-width: 7px;
+            border-right-color: #f7f7f7;
+            margin-top: 1px;
+            margin-left: 2px;
+        }
+
+        .panel > .panel-heading:before {
+            border-right-color: #ddd;
+            border-width: 8px;
+        }
+
+    </style>
+</head>
+<body data-spy="scroll" data-target="nav">
+<div id="divLoading" class="show" ng-if="isLoading!=false"></div>
+<header id="header-3" class="soft-scroll  content-2-7" data-pg-collapsed>
+    <nav>
+        <div class="container">
+            <div class="col-md-8 col-md-offset-2 col-sm-8 col-sm-offset-2 col-xs-8 col-xs-offset-2">
+                <nav class="pull">
+                    <ul class="top-nav">
+                        <li class="nav-item active">
+                            <a href="#header-3">{{index.nav.home}} <span class="indicator"><i
+                                    class="fa fa-angle-right"></i></span></a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="#header-3">{{index.nav.stats}} <span class="indicator"><i
+                                    class="fa fa-angle-right"></i></span></a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="#content-3-6">{{index.nav.tweets}} <span class="indicator"><i
+                                    class="fa fa-angle-right"></i></span></a>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </nav>
+    <section class="hero">
+        <div class="container">
+            <div class="brand">
+                <a href="#">
+                    <img src="images/logo.png" class="brand-img img-responsive" title="{{index.title}}">
+                </a>
+            </div>
+            <div class="navicon">
+                <a id="nav-toggle" class="nav-slide-btn" href="#"><span></span></a>
+            </div>
+            <section>
+                <div class="container">
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="underlined-title">
+                                <h1 class="white">{{index.headerTitle}}</h1>
+                                <hr>
+                            </div>
+                        </div>
+                        <div class="col-md-8 col-md-offset-2 text-center">
+                            <canvas id="line" class="chart chart-line" chart-data="data" chart-labels="labels"
+                                    chart-series="series"
+                                    chart-options="options" chart-colors="colors"
+                                    chart-dataset-override="datasetOverride">
+                            </canvas>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="text-center col-sm-4">
+                            <div class="counter-icon">
+                                <span class="fa fa-smile-o turquoise"></span>
+                            </div>
+                            <div class="counter-text">
+                                <h3 class="counter" ng-bind="positive.length"></h3>
+                                <span class="text-uppercase">{{index.positiveTweets}}</span>
+                            </div>
+                        </div>
+                        <div class="text-center col-sm-4">
+                            <div class="counter-icon">
+                                <span class="fa fa-meh-o"></span>
+                            </div>
+                            <div class="counter-text">
+                                <h3 class="counter" ng-bind="natural.length"></h3>
+                                <span class="text-uppercase">{{index.neutralTweets}}</span>
+                            </div>
+                        </div>
+                        <div class="text-center col-sm-4">
+                            <div class="counter-icon">
+                                <span class="fa fa-frown-o milanored"></span>
+                            </div>
+                            <div class="counter-text">
+                                <h3 class="counter" ng-bind="negative.length"></h3>
+                                <span class="text-uppercase">{{index.negativeTweets}}</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </section>
+</header>
+
+<section id="content-3-6" class="content-block content-3-6 bg-clouds bg-offwhite-hover  ">
+    <div class="container">
+        <div class="col-sm-12">
+            <div class="underlined-title">
+                <h1>{{index.TweetsTitle}}</h1>
+                <hr>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="row">
+            <div class="col-xs-12 col-sm-6">
+                <div class="feature-box bg-turquoise">
+                    <a href="#" class="btn btn-outline btn-outline-lg outline-light">{{index.positiveTweets}}</a>
+                    <div class="row">
+                        <div class="col-md-10 col-sm-offset-1">
+                            <div class="panel-group tweetsBox">
+                                <a href="https://twitter.com/\{{tweet.username}}" class="list-group-item"
+                                   ng-repeat="tweet in positive track by $index" style=" min-height: 100px;">
+                                    <div class="media-box">
+                                        <div class="row">
+                                            <div class="col-sm-3">
+                                                <div class="thumbnail">
+                                                    <img class="img-responsive"
+                                                         ng-src="\{{tweet.icon}}">
+                                                </div>
+                                            </div>
+
+                                            <div class="col-sm-9">
+                                                <div class="panel panel-default">
+                                                    <div class="panel-heading">
+                                                        <strong>@\{{tweet.username}}</strong> (<span
+                                                            class="text-muted">\{{tweet.name}}</span>)
+                                                    </div>
+                                                    <div class="panel-body">
+                                                        {{#if highlightKeywords}}
+                                                            <small ng-bind-html="tweet.text | highlight:tweet.sentiment"></small>
+                                                        {{else}}
+                                                            <small ng-bind="tweet.text"></small>
+                                                        {{/if}}
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </a>
+                                <p ng-if="!positive.length">{{index.waitingFor}} {{index.positiveTweets}} ...</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xs-12 col-sm-6">
+                <div class="feature-box bg-milanored">
+                    <a href="#" class="btn btn-outline btn-outline-lg outline-light">{{index.negativeTweets}}</a>
+                    <div class="row">
+                        <div class="col-md-10 col-sm-offset-1">
+                            <div class="panel-group tweetsBox">
+                                <a href="https://twitter.com/\{{tweet.username}}" class="list-group-item"
+                                   ng-repeat="tweet in negative track by $index" style=" min-height: 100px;">
+
+                                    <div class="media-box">
+                                        <div class="row">
+                                            <div class="col-sm-3">
+                                                <div class="thumbnail">
+                                                    <img class="img-responsive"
+                                                         ng-src="\{{tweet.icon}}">
+                                                </div>
+                                            </div>
+
+                                            <div class="col-sm-9">
+                                                <div class="panel panel-default">
+                                                    <div class="panel-heading">
+                                                        <strong>@\{{tweet.username}}</strong> (<span
+                                                            class="text-muted">\{{tweet.name}}</span>)
+                                                    </div>
+                                                    <div class="panel-body">
+                                                        {{#if highlightKeywords}}
+                                                            <small ng-bind-html="tweet.text | highlight:tweet.sentiment"></small>
+                                                        {{else}}
+                                                            <small ng-bind="tweet.text"></small>
+                                                        {{/if}}
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </a>
+                                <p ng-if="!negative.length">{{index.waitingFor}} {{index.negativeTweets}} ...</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<div class="copyright-bar-2">
+    <div class="container text-center">
+        <p>{{index.copyrights}}</p>
+    </div>
+</div>
+
+<script type="text/javascript" src="dist/scripts.min.js"></script>
+</body>
+</html>
